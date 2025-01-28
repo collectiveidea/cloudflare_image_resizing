@@ -7,6 +7,7 @@ gem "puma"
 
 gem "sqlite3"
 
+gem "rspec-rails"
 gem "standard", ">= 1.35.1"
 gem "standard-rails"
 

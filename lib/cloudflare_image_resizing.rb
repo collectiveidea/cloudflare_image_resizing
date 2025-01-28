@@ -1,6 +1,10 @@
-require "cloudflare_image_resizing/version"
-require "cloudflare_image_resizing/railtie"
+# frozen_string_literal: true
+
+require "zeitwerk"
+loader = Zeitwerk::Loader.for_gem
+loader.setup
 
 module CloudflareImageResizing
-  # Your code goes here...
 end
+
+loader.eager_load

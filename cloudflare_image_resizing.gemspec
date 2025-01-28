@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.email = ["daniel@collectiveidea.com"]
   spec.homepage = "https://github.com/collectiveidea/cloudflare-image-resizing"
   spec.summary = "Easily resize images in Rails using Cloudflare's image resizing service."
-  spec.description = "Easily resize images in Railsusing Cloudflare's image resizing service."
+  spec.description = "Easily resize images in Rails using Cloudflare's image resizing service."
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.7.0"
 

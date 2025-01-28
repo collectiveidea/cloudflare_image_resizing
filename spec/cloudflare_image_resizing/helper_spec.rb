@@ -68,15 +68,16 @@ RSpec.describe "CloudflareImageResizing::Helper" do
       it "adds a content_for resized images if preload=true" do
         result1 = helper.resized_image(image, width: 10, fit: "crop", preload: true)
         result2 = helper.resized_image("another_image.png", width: 10, fit: "crop", preload: true)
-        expect(helper.content_for(:preload_links)).to include(result1)
-        expect(helper.content_for(:preload_links)).to include(result2)
+        expect(helper.content_for(:cloudflare_image_resizing_preload)).to include(result1)
+        expect(helper.content_for(:cloudflare_image_resizing_preload)).to include(result2)
       end
 
       it "doesn't a content_for on a non-resizable image if preload=true" do
         # Call a "good" one so the content_for gets set. Not required, but easier testing.
-        helper.resized_image(image, width: 10, fit: "crop", preload: true)
-        result = helper.resized_image(non_resizable_image, width: 10, fit: "crop", preload: true)
-        expect(helper.content_for(:preload_links)).not_to include(result)
+        result1 = helper.resized_image(image, width: 10, fit: "crop", preload: true)
+        result2 = helper.resized_image(non_resizable_image, width: 10, fit: "crop", preload: true)
+        expect(helper.content_for(:cloudflare_image_resizing_preload)).to include(result1)
+        expect(helper.content_for(:cloudflare_image_resizing_preload)).not_to include(result2)
       end
     end
   end

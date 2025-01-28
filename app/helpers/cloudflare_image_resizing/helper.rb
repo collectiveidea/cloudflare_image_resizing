@@ -32,16 +32,18 @@ module CloudflareImageResizing
         image_path(image)
       end
 
-      if ::Rails.application.config.cloudflare_image_resizing.enabled && resizable?(image)
-        path = "/" + path unless path.starts_with?("/") # Direct R2 URLs don't have a leading /
-        path = "/cdn-cgi/image/" + options.to_param.tr("&", ",") + path
-      end
+      if resizable?(image)
+        if ::Rails.application.config.cloudflare_image_resizing.enabled
+          path = "/" + path unless path.starts_with?("/") # Direct R2 URLs don't have a leading /
+          path = "/cdn-cgi/image/" + options.to_param.tr("&", ",") + path
+        end
 
-      if preload
-        # Allow us to add a <link rel="preload"> to the head
-        # to speed up loading resized images.
-        content_for(:cloudflare_image_resizing_preload) do
-          preload_link_tag(path, as: :image)
+        if preload
+          # Allow us to add a <link rel="preload"> to the head
+          # to speed up loading resized images.
+          content_for(:cloudflare_image_resizing_preload) do
+            preload_link_tag(path, as: :image)
+          end
         end
       end
 

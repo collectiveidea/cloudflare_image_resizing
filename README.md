@@ -60,7 +60,7 @@ gem "cloudflare_image_resizing"
 
 ## Configuration
 
-You can use an initializer to configure the `enabled` flag (defaults to `true` for non-local environments, checking `Rails.env.local?`.)
+You can use an initializer to configure the `enabled` flag (defaults to `true` for non-local environments (production), checking `Rails.env.local?`.)
 
 ```ruby
 Rails.application.config.cloudflare_image_resizing.enabled = false

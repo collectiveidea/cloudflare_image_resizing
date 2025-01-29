@@ -5,7 +5,7 @@ module CloudflareImageResizing
     attr_accessor :enabled
 
     def initialize
-      @enabled = ::Rails.env.local?
+      @enabled = !::Rails.env.local?
     end
   end
 end

@@ -23,5 +23,7 @@ module Dummy
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.cloudflare_image_resizing.enabled = true
   end
 end

@@ -19,11 +19,12 @@ RSpec.describe "CloudflareImageResizing::Helper" do
 
   describe "resized_image_tag" do
     it "calls resized_image with the resize: options" do
-      expect(helper).to receive(:resized_image).with("/foo.jpg", {width: 10, rotate: 90}).and_return("/foo.jpg")
-      expect(helper).to receive(:resized_image).with("/foo.jpg", {dpr: 3, width: 10, rotate: 90}).and_return("/foo.jpg")
-      expect(helper).to receive(:resized_image).with("/foo.jpg", {dpr: 2, width: 10, rotate: 90}).and_return("/foo.jpg")
-      expect(helper).to receive(:resized_image).with("/foo.jpg", {dpr: 1, width: 10, rotate: 90}).and_return("/foo.jpg")
-      helper.resized_image_tag "/foo.jpg", resize: {width: 10, rotate: 90}, alt: "A foo", width: 20
+      expect(helper).to receive(:resized_image).with("/foo.jpg", {width: 10, rotate: 90}).and_call_original
+      expect(helper).to receive(:resized_image).with("/foo.jpg", {dpr: 3, width: 10, rotate: 90}).and_call_original
+      expect(helper).to receive(:resized_image).with("/foo.jpg", {dpr: 2, width: 10, rotate: 90}).and_call_original
+      expect(helper).to receive(:resized_image).with("/foo.jpg", {dpr: 1, width: 10, rotate: 90}).and_call_original
+      result = helper.resized_image_tag "/foo.jpg", resize: {width: 10, rotate: 90}, alt: "A foo", width: 20
+      expect(result).to eq('<img srcset="/cdn-cgi/image/dpr=1,rotate=90,width=10/foo.jpg, /cdn-cgi/image/dpr=2,rotate=90,width=10/foo.jpg 2x, /cdn-cgi/image/dpr=3,rotate=90,width=10/foo.jpg 3x" alt="A foo" width="20" src="/cdn-cgi/image/rotate=90,width=10/foo.jpg" />')
     end
 
     it "calls image_tag with the resize: options" do
@@ -33,9 +34,9 @@ RSpec.describe "CloudflareImageResizing::Helper" do
     end
 
     it "does not override the srcset if one is provided" do
-      expect(helper).to receive(:resized_image).exactly(4).times.and_return("/foo.jpg")
+      expect(helper).to receive(:resized_image).exactly(4).times.and_call_original
       result = helper.resized_image_tag "/foo.jpg", resize: {width: 10, rotate: 90}, srcset: "nope.gif", alt: "A foo", width: 20
-      expect(result).to eq(image_tag("/foo.jpg", srcset: "nope.gif", alt: "A foo", width: 20))
+      expect(result).to eq('<img srcset="nope.gif" alt="A foo" width="20" src="/cdn-cgi/image/rotate=90,width=10/foo.jpg" />')
     end
   end
 

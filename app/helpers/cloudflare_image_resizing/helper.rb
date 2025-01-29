@@ -11,11 +11,12 @@ module CloudflareImageResizing
     # <%= resized_image_tag @user.avatar, resize: {width: 100, fit: "crop"}, alt: "Cropped avatar" %>
     def resized_image_tag(image, options = {})
       resize_options = options.delete(:resize) || {}
+      # note: srcset needs to encode the commas in the URLs (%2C) to avoid confusing it with commas between variants.
       image_tag(
         resized_image(image, resize_options),
-        options.reverse_merge(srcset: "#{resized_image(image, resize_options.merge(dpr: 1))},
-        #{resized_image(image, resize_options.merge(dpr: 2))} 2x,
-        #{resized_image(image, resize_options.merge(dpr: 3))} 3x".gsub(/\s+/, " "))
+        options.reverse_merge(srcset: "#{resized_image(image, resize_options.merge(dpr: 1)).gsub(",", "%2C")},
+        #{resized_image(image, resize_options.merge(dpr: 2)).gsub(",", "%2C")} 2x,
+        #{resized_image(image, resize_options.merge(dpr: 3)).gsub(",", "%2C")} 3x".gsub(/\s+/, " "))
       )
     end
 

@@ -1,5 +1,5 @@
-[![Gem Version](https://img.shields.io/gem/v/cloudflare-image-resizing.svg)](https://rubygems.org/gems/cloudflare-image-resizing)
-[![CI](https://github.com/collectiveidea/cloudflare-image-resizing/actions/workflows/ci.yml/badge.svg)](https://github.com/collectiveidea/cloudflare-image-resizing/actions/workflows/ci.yml)
+[![Gem Version](https://img.shields.io/gem/v/cloudflare_image_resizing.svg)](https://rubygems.org/gems/cloudflare_image_resizing)
+[![CI](https://github.com/collectiveidea/cloudflare_image_resizing/actions/workflows/ci.yml/badge.svg)](https://github.com/collectiveidea/cloudflare_image_resizing/actions/workflows/ci.yml)
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://github.com/testdouble/standard)
 
 # CloudflareImageResizing

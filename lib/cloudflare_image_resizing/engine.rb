@@ -6,7 +6,7 @@ module CloudflareImageResizing
     config.cloudflare_image_resizing = Configuration.new
 
     config.to_prepare do
-      ApplicationController.helper(CloudflareImageResizing::Helper)
+      ::ApplicationController.helper(CloudflareImageResizing::Helper)
     end
   end
 end

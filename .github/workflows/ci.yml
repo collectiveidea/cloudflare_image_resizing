@@ -14,9 +14,7 @@ jobs:
     strategy:
       matrix:
         ruby:
-          - 2.7
-          - '3.0' # keep as string or it turns into "3" which pulls the newest 3.x, not 3.0.x
-          - 3.1
+          # Gemfile.lock resolves to Rails 8, which needs Ruby >= 3.2
           - 3.2
           - 3.3
           - 3.4

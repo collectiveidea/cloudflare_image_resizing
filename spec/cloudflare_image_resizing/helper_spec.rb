@@ -9,6 +9,12 @@ RSpec.describe "CloudflareImageResizing::Helper" do
       include ActionView::Helpers::AssetTagHelper
       include ActionView::Helpers::CaptureHelper
       include ActionView::Context
+
+      # As of Rails 8.1, preload_link_tag consults the CSP nonce, which is
+      # normally supplied by the controller. There's no request here.
+      def content_security_policy_nonce
+        nil
+      end
     }.new
   }
 
@@ -97,19 +103,27 @@ RSpec.describe "CloudflareImageResizing::Helper" do
       end
     end
 
-    # context "with an ActiveStorage attachment" do
-    #   let(:user) { create(:user) }
-    #   it "returns true if it is a resizable type" do
-    #     user.update! avatar: fixture_file_upload(Rails.root.join("app/assets/images/logo-icon.png"), "image/png")
-    #     expect(helper.resizable?(user.avatar)).to be(true)
-    #   end
+    context "with an ActiveStorage attachment" do
+      # The dummy app has no database, so stand in for a real attachment.
+      def attachment_with_content_type(content_type)
+        double("ActiveStorage::Attachment", content_type: content_type).tap do |attachment|
+          allow(attachment).to receive(:is_a?) { |klass| klass == ActiveStorage::Attachment }
+        end
+      end
 
-    #   it "returns true if it is a resizable type" do
-    #     user.update! avatar: fixture_file_upload(Rails.root.join("app/assets/images/logo-icon.svg"), "image/svg+xml")
-    #     user.reload
-    #     expect(helper.resizable?(non_resizable_image)).to be(false)
-    #   end
-    # end
+      it "returns true if it is a resizable type" do
+        expect(helper.resizable?(attachment_with_content_type("image/png"))).to be(true)
+      end
+
+      it "returns true for HEIC/HEIF" do
+        expect(helper.resizable?(attachment_with_content_type("image/heic"))).to be(true)
+        expect(helper.resizable?(attachment_with_content_type("image/heif"))).to be(true)
+      end
+
+      it "returns false if it is not a resizable type" do
+        expect(helper.resizable?(attachment_with_content_type("image/svg+xml"))).to be(false)
+      end
+    end
 
     context "with an unexpected object" do
       it "returns false" do

@@ -41,9 +41,9 @@ You can use the helpers outside of a controller or view, simply `include Cloudfl
 
 ### Resizable formats
 
-Not all formats are resizable. See Cloudflare's docs on [format limitations](https://developers.cloudflare.com/images/image-resizing/format-limitations/)
+Not all formats are resizable. See Cloudflare's docs on [supported formats](https://developers.cloudflare.com/images/get-started/limits/)
 
-tl;dr: these helpers only try to resize `image/jpeg`, `image/gif`, `image/png`, and `image/webp`. Other formats are passed through without resizing.
+tl;dr: these helpers only try to resize `image/jpeg`, `image/gif`, `image/png`, `image/webp`, `image/heic`, and `image/heif`. Other formats are passed through without resizing. Note that HEIC is input-only: Cloudflare will transcode it to a web-friendly output format (never HEIC), which makes it safe to serve HEIC uploads to any browser.
 
 ## Prerequisites
 

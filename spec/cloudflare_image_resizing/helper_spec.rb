@@ -9,6 +9,12 @@ RSpec.describe "CloudflareImageResizing::Helper" do
       include ActionView::Helpers::AssetTagHelper
       include ActionView::Helpers::CaptureHelper
       include ActionView::Context
+
+      # As of Rails 8.1, preload_link_tag consults the CSP nonce, which is
+      # normally supplied by the controller. There's no request here.
+      def content_security_policy_nonce
+        nil
+      end
     }.new
   }
 

@@ -2,7 +2,7 @@
 
 module CloudflareImageResizing
   module Helper
-    RESIZABLE_CONTENT_TYPES = %w[image/jpeg image/gif image/png image/webp].freeze
+    RESIZABLE_CONTENT_TYPES = %w[image/jpeg image/gif image/png image/webp image/heic image/heif].freeze
 
     # Helper to use resized_image and also build an image_tag
     # Automatically adds a srcset with the same image in 2x and 3x (unless a srcset is provided.)
@@ -52,7 +52,7 @@ module CloudflareImageResizing
     end
 
     # Is the image resizable with Cloudflare Image Resizing?
-    # https://developers.cloudflare.com/images/image-resizing/format-limitations/
+    # https://developers.cloudflare.com/images/get-started/limits/
     # If we try and it isn't, we get a 415
     # Someday (supposedly) setting onerror=redirect will make this unnecessary.
     def resizable?(image)
